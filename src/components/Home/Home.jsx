@@ -6,7 +6,11 @@ const Home = () => {
   return (
     <div>
       <div>
-        <img className=" h-[400px] w-full" src={img} alt="" />
+        <img
+          className=" lg:h-[400px] h-[200px] lg:mt-0 mt-16 w-full"
+          src={img}
+          alt=""
+        />
       </div>
       <div>
         <ProfileSection></ProfileSection>

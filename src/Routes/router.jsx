@@ -5,6 +5,7 @@ import Resume from "../components/Resume/Resume";
 import AllPublication from "../components/AllPublication/AllPublication";
 import StudentCorner from "../components/StudentCorner/StudentCorner";
 import Tools from "../components/Tools/Tools";
+import Dashboard from "../components/Dashboard/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: "/tools",
         element: <Tools></Tools>,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard></Dashboard>,
       },
     ],
   },

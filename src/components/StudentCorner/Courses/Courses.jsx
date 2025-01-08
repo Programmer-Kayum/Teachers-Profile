@@ -68,6 +68,7 @@ const Courses = () => {
         ></SectionTitle>
 
         <div>
+          {/* ****************************** */}
           <div>
             <div className="flex items-center my-4 justify-between border p-4 rounded-lg bg-gray-50 shadow-md max-w-4xl mx-auto">
               {/* File Name */}

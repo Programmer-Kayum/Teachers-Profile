@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "batchYear": 2020,
+    "course": ["ECE", "EEE", "MATH"],
+    "items": ["PDF", "Assignment", "CT Marks", "Mid Marks", "Attendance Mark"]
+  },
+  {
+    "id": 2,
+    "batchYear": 2021,
+    "course": ["DES", "Electronics", "MATH"],
+    "items": ["PDF", "Assignment", "CT Marks", "Mid Marks", "Attendance Mark"]
+  }
+]
