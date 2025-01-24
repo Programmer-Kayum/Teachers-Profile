@@ -2,13 +2,40 @@
   {
     "id": 1,
     "batchYear": 2020,
-    "course": ["ECE", "EEE", "MATH"],
-    "items": ["PDF", "Assignment", "CT Marks", "Mid Marks", "Attendance Mark"]
+    "course": ["Multimedia"],
+    "pdf": "PDF",
+    "Assignment": "Assignment",
+    "ctMark": "CT Mark",
+    "midMark": "MID Mark"
   },
+
   {
     "id": 2,
     "batchYear": 2021,
-    "course": ["DES", "Electronics", "MATH"],
-    "items": ["PDF", "Assignment", "CT Marks", "Mid Marks", "Attendance Mark"]
+    "course": ["DES", "Electronics"],
+    "pdf": "PDF",
+    "Assignment": "Assignment",
+    "ctMark": "CT Mark",
+    "midMark": "MID Mark"
+  },
+
+  {
+    "id": 3,
+    "batchYear": 2023,
+    "course": ["Multimedia"],
+    "pdf": "PDF",
+    "Assignment": "Assignment",
+    "ctMark": "CT Mark",
+    "midMark": "MID Mark"
+  },
+
+  {
+    "id": 4,
+    "batchYear": 2024,
+    "course": ["DES", "Electronics"],
+    "pdf": "PDF",
+    "Assignment": "Assignment",
+    "ctMark": "CT Mark",
+    "midMark": "MID Mark"
   }
 ]

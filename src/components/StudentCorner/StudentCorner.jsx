@@ -2,12 +2,10 @@ import img from "../../assets/studentCorners.jpg";
 // import Courses from "./Courses/Courses";
 import LectureMaterials from "./LectureMaterials/LectureMaterials";
 import NoticeBoard from "./NoticeBoard/NoticeBoard";
-import useMenu from "../../Hook/useMenu";
 import SectionTitle from "../../Shared/SectionTitle/SectionTitle";
 import { useEffect, useState } from "react";
 
 const StudentCorner = () => {
-  // const batches = useMenu();
   const [batches, setBatches] = useState([]);
   useEffect(() => {
     fetch("batches.json")

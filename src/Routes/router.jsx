@@ -6,6 +6,10 @@ import AllPublication from "../components/AllPublication/AllPublication";
 import StudentCorner from "../components/StudentCorner/StudentCorner";
 import Tools from "../components/Tools/Tools";
 import Dashboard from "../components/Dashboard/Dashboard";
+import Courses from "../components/StudentCorner/Courses/Courses";
+import AddPublication from "../components/Dashboard/AddPublication/AddPublication";
+import AddExamResult from "../components/Dashboard/AddExamResult/AddExamResult";
+import AddClassPdf from "../components/Dashboard/AddClassPdf/AddClassPdf";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +39,22 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard></Dashboard>,
+      },
+      {
+        path: "/pdf",
+        element: <Courses></Courses>,
+      },
+      {
+        path: "/uploadPublication",
+        element: <AddPublication></AddPublication>,
+      },
+      {
+        path: "/uploadResult",
+        element: <AddExamResult></AddExamResult>,
+      },
+      {
+        path: "/uploadPdf",
+        element: <AddClassPdf></AddClassPdf>,
       },
     ],
   },

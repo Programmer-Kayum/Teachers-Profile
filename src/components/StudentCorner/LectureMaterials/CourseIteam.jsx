@@ -1,4 +1,5 @@
 import { FaUpload } from "react-icons/fa";
+import Items from "./Items";
 
 const CourseIteam = ({ batch }) => {
   return (
@@ -7,16 +8,8 @@ const CourseIteam = ({ batch }) => {
         {/* Row Layout */}
         <div className="flex flex-wrap ml-20 gap-4 items-center">
           {/* Loop through items array */}
-          {batch.items?.map((item, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center justify-center p-2 bg-gray-50 border rounded-lg shadow-sm transition-all duration-300 hover:shadow-md"
-            >
-              {/* Item Info */}
-              <h2 className="text-lg font-semibold text-gray-700">{item}</h2>
-            </div>
-          ))}
-
+          {/* className="flex flex-col items-center justify-center p-2 bg-gray-50 border rounded-lg shadow-sm transition-all duration-300 hover:shadow-md" */}
+          {<Items batch={batch}></Items>}
           {/* Upload Button */}
           <div className="flex flex-col items-center justify-center p-2 bg-gray-50 border rounded-lg shadow-sm transition-all duration-300 hover:shadow-md">
             <label className="flex items-center space-x-2 bg-blue-100 text-blue-700 text-sm font-medium py-1 px-4 rounded-lg hover:bg-blue-300 cursor-pointer transition-all duration-500">
