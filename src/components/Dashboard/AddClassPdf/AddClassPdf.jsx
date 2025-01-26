@@ -1,18 +1,56 @@
+import axios from "axios";
 import React from "react";
 
 const AddClassPdf = () => {
-  const handleSubmit = (event) => {
+  // Fix the function name to 'handleSubmit'
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
 
-    const courseName = form.courseName.value;
-    const courseCode = form.courseCode.value;
+    // Get form values
+    const courseName = form.courseName.value.trim();
+    const courseCode = form.courseCode.value.trim();
     const batch = form.batch.value;
     const level = form.level.value;
     const semester = form.semester.value;
     const pdf = form.pdf.files[0];
 
-    console.log({ courseName, courseCode, batch, level, semester, pdf });
+    // Basic validation
+    if (!courseName || !courseCode || !batch || !level || !semester || !pdf) {
+      alert("All fields are required.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("courseName", courseName);
+    formData.append("courseCode", courseCode);
+    formData.append("batch", batch);
+    formData.append("level", level);
+    formData.append("semester", semester);
+    formData.append("file", pdf);
+
+    try {
+      // Send POST request with FormData using axios
+      const result = await axios.post(
+        "http://localhost:5000/upload-files",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      // Handle success
+      if (result.data.status === "ok") {
+        alert("Uploaded Successfully!!!");
+        form.reset(); // Reset the form after successful upload
+      } else {
+        alert("Failed to upload PDF. Please try again.");
+      }
+    } catch (error) {
+      // Handle error
+      console.error("Error submitting form:", error);
+      alert("An error occurred while submitting the form.");
+    }
   };
 
   return (
@@ -71,10 +109,12 @@ const AddClassPdf = () => {
             id="batch"
             name="batch"
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            defaultValue=""
           >
-            <option disabled selected>
+            <option value="" disabled>
               Select Batch
             </option>
+            <option>2020</option>
             <option>2021</option>
             <option>2022</option>
             <option>2023</option>
@@ -94,8 +134,9 @@ const AddClassPdf = () => {
             id="level"
             name="level"
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            defaultValue=""
           >
-            <option disabled selected>
+            <option value="" disabled>
               Select Level
             </option>
             <option>Level 1</option>
@@ -117,8 +158,9 @@ const AddClassPdf = () => {
             id="semester"
             name="semester"
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            defaultValue=""
           >
-            <option disabled selected>
+            <option value="" disabled>
               Select Semester
             </option>
             <option>Semester 1</option>

@@ -16,17 +16,18 @@ const AllPublication = () => {
   }, []);
 
   const conferences = publication.filter(
-    (item) => item.category === "conference"
+    (item) => item.category === "Conference"
   );
-  const journals = publication.filter((item) => item.category === "journal");
+  const journals = publication.filter((item) => item.category === "Journal");
 
   return (
     <div>
       <div className="">
         <img className="h-[400px] w-full" src={img} alt="" />
       </div>
+
       <div className="mx-10 mt-4 mb-16 ">
-        <SectionTitle heading={"Journal Papers"}></SectionTitle>
+        <SectionTitle heading={"Journal Papers "}></SectionTitle>
         <ul className="space-y-4 list-decimal ml-2 my-4">
           {journals.map((journal) => (
             <JournalPapers journal={journal} key={journal._id}></JournalPapers>

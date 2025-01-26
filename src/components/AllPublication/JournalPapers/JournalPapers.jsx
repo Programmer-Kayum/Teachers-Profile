@@ -1,12 +1,22 @@
 const JournalPapers = ({ journal }) => {
-  const { author, supervisor, title, place, publicationDate, link } = journal;
+  const { paper, link } = journal;
+
+  // Highlight name logic
+  const highlightName = (text) => {
+    const nameToBold = "Mahfujur Rahman";
+    const regex = new RegExp(`(${nameToBold})`, "gi"); // Regular Expression
+    return text.replace(regex, "<strong>$1</strong>");
+  };
+
   return (
     <div>
       <li className="p-4 bg-white shadow-md rounded-lg border border-gray-200">
-        <p>
-          {author},<span className="font-bold text-lg">{supervisor},</span>
-          {title}, {place}, {publicationDate}
-        </p>
+        {/* Display paper details with bolded name */}
+        <p
+          dangerouslySetInnerHTML={{
+            __html: highlightName(paper),
+          }}
+        />
 
         <p className="text-gray-700 font-bold text-orange-500">
           <a href={link} target="_blank" rel="noopener noreferrer">

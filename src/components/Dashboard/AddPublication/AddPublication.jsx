@@ -4,25 +4,14 @@ const AddPublication = () => {
   const handlePublicationSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
-
-    const author = form.author.value;
-    const supervisor = form.supervisor.value;
+    const paper = form.paper.value;
     const category = form.category.value;
-    const title = form.title.value;
-    const place = form.place.value;
-    const date = form.date.value;
     const link = form.link.value;
-
-    console.log(author, supervisor, category, title, place, date, link);
 
     // Correctly format the data to send in the POST request
     const publicationData = {
-      author,
-      supervisor,
+      paper,
       category,
-      title,
-      place,
-      date,
       link,
     };
 
@@ -76,44 +65,28 @@ const AddPublication = () => {
           onSubmit={handlePublicationSubmit}
           className="p-6 bg-white border rounded-lg shadow-md w-full mx-5"
         >
-          <div className="space-y-4">
+          <div className=" space-y-4">
             {/* Author */}
             <div>
               <label
-                htmlFor="author"
+                htmlFor="Paper"
                 className="block text-gray-600 font-medium mb-1"
               >
-                Author
+                Paper
               </label>
               <input
                 type="text"
-                id="author"
-                name="author"
-                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter author name"
+                id="paper"
+                name="paper"
+                className="w-full py-5 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter paper details"
                 required
               />
             </div>
+
             <div className="flex gap-4">
-              {/* Supervisor */}
-              <div className="w-1/2">
-                <label
-                  htmlFor="supervisor"
-                  className="block text-gray-600 font-medium mb-1"
-                >
-                  Supervisor
-                </label>
-                <input
-                  type="text"
-                  id="supervisor"
-                  name="supervisor"
-                  className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter supervisor name"
-                  required
-                />
-              </div>
               {/* Category */}
-              <div className="w-1/2">
+              <div className="w-2/5">
                 <label
                   htmlFor="category"
                   className="block text-gray-600 font-medium mb-1"
@@ -134,75 +107,24 @@ const AddPublication = () => {
                   <option value="Conference">conference</option>
                 </select>
               </div>
-            </div>
-            {/* Title */}
-            <div>
-              <label
-                htmlFor="title"
-                className="block text-gray-600 font-medium mb-1"
-              >
-                Title
-              </label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter publication title"
-                required
-              />
-            </div>
-            <div className="flex gap-4">
-              {/* Place */}
-              <div className="w-1/2">
+
+              {/* Link */}
+              <div className="w-3/5">
                 <label
-                  htmlFor="place"
+                  htmlFor="link"
                   className="block text-gray-600 font-medium mb-1"
                 >
-                  Place
+                  Link
                 </label>
                 <input
-                  type="text"
-                  id="place"
-                  name="place"
+                  type="url"
+                  id="link"
+                  name="link"
                   className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter place of publication"
+                  placeholder="Enter publication link"
                   required
                 />
               </div>
-              {/* Publication Date */}
-              <div className="w-1/2">
-                <label
-                  htmlFor="date"
-                  className="block text-gray-600 font-medium mb-1"
-                >
-                  Publication Date
-                </label>
-                <input
-                  type="date"
-                  id="date"
-                  name="date"
-                  className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-            </div>
-            {/* Link */}
-            <div>
-              <label
-                htmlFor="link"
-                className="block text-gray-600 font-medium mb-1"
-              >
-                Link
-              </label>
-              <input
-                type="url"
-                id="link"
-                name="link"
-                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter publication link"
-                required
-              />
             </div>
           </div>
 
