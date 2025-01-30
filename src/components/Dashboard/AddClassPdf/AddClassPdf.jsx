@@ -1,60 +1,55 @@
+import { useState, useEffect } from "react";
 import axios from "axios";
-import React from "react";
 
-const AddClassPdf = () => {
-  // Fix the function name to 'handleSubmit'
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.target;
+export default function App() {
+  const [formData, setFormData] = useState({
+    name: "",
+    class: "",
+    year: "",
+    courseName: "",
+    courseCode: "",
+    batch: "",
+    level: "",
+    semester: "",
+    pdf: null,
+  });
 
-    // Get form values
-    const courseName = form.courseName.value.trim();
-    const courseCode = form.courseCode.value.trim();
-    const batch = form.batch.value;
-    const level = form.level.value;
-    const semester = form.semester.value;
-    const pdf = form.pdf.files[0];
-
-    // Basic validation
-    if (!courseName || !courseCode || !batch || !level || !semester || !pdf) {
-      alert("All fields are required.");
-      return;
+  const handleChange = (e) => {
+    if (e.target.name === "pdf") {
+      setFormData({ ...formData, pdf: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
     }
+  };
 
-    const formData = new FormData();
-    formData.append("courseName", courseName);
-    formData.append("courseCode", courseCode);
-    formData.append("batch", batch);
-    formData.append("level", level);
-    formData.append("semester", semester);
-    formData.append("file", pdf);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    data.append("courseName", formData.courseName);
+    data.append("courseCode", formData.courseCode);
+    data.append("batch", formData.batch);
+    data.append("level", formData.level);
+    data.append("semester", formData.semester);
+    data.append("pdf", formData.pdf);
 
     try {
-      // Send POST request with FormData using axios
-      const result = await axios.post(
-        "http://localhost:5000/upload-files",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-
-      // Handle success
-      if (result.data.status === "ok") {
-        alert("Uploaded Successfully!!!");
-        form.reset(); // Reset the form after successful upload
+      const response = await axios.post("http://localhost:5000/upload", data);
+      if (response.status === 200) {
+        alert("PDF uploaded successfully!");
       } else {
-        alert("Failed to upload PDF. Please try again.");
+        alert("PDF upload failed. Please try again.");
       }
     } catch (error) {
-      // Handle error
-      console.error("Error submitting form:", error);
-      alert("An error occurred while submitting the form.");
+      alert("Error uploading PDF: " + error.message);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6">
+      <h1 className="text-3xl font-bold mb-6">PDF Upload</h1>
+
+      {/* Upload Form */}
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md"
@@ -76,7 +71,9 @@ const AddClassPdf = () => {
             id="courseName"
             name="courseName"
             placeholder="Enter course name"
+            onChange={handleChange}
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
           />
         </div>
 
@@ -93,7 +90,9 @@ const AddClassPdf = () => {
             id="courseCode"
             name="courseCode"
             placeholder="Enter course code"
+            onChange={handleChange}
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
           />
         </div>
 
@@ -108,8 +107,9 @@ const AddClassPdf = () => {
           <select
             id="batch"
             name="batch"
+            onChange={handleChange}
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            defaultValue=""
+            required
           >
             <option value="" disabled>
               Select Batch
@@ -133,8 +133,9 @@ const AddClassPdf = () => {
           <select
             id="level"
             name="level"
+            onChange={handleChange}
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            defaultValue=""
+            required
           >
             <option value="" disabled>
               Select Level
@@ -157,8 +158,9 @@ const AddClassPdf = () => {
           <select
             id="semester"
             name="semester"
+            onChange={handleChange}
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            defaultValue=""
+            required
           >
             <option value="" disabled>
               Select Semester
@@ -177,8 +179,10 @@ const AddClassPdf = () => {
             type="file"
             id="pdf"
             name="pdf"
+            onChange={handleChange}
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             accept=".pdf"
+            required
           />
         </div>
 
@@ -194,6 +198,4 @@ const AddClassPdf = () => {
       </form>
     </div>
   );
-};
-
-export default AddClassPdf;
+}

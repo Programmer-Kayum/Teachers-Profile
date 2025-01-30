@@ -84,6 +84,19 @@ const NavBar = () => {
           DASH BOARD
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to="/pdf"
+          className={({ isActive }) =>
+            `transition-colors duration-300 ${
+              isActive ? "text-yellow-500 font-bold" : "hover:text-yellow-500"
+            }`
+          }
+          aria-label="Dashboard"
+        >
+          PDF
+        </NavLink>
+      </li>
     </>
   );
 

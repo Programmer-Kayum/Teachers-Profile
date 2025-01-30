@@ -41,8 +41,8 @@ export const router = createBrowserRouter([
         element: <Dashboard></Dashboard>,
       },
       {
-        path: "/pdf",
-        element: <Courses></Courses>,
+        path: "/pdfs/:batchYear", // Correct dynamic parameter syntax
+        element: <Courses />,
       },
       {
         path: "/uploadPublication",

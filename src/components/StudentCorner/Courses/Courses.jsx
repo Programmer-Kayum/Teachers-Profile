@@ -1,125 +1,35 @@
+import axios from "axios";
 import SectionTitle from "../../../Shared/SectionTitle/SectionTitle";
-import { FaDownload } from "react-icons/fa";
+
+import ClassPdf from "./ClassPdf";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 const Courses = () => {
+  const [classPdfs, setClassPdfs] = useState([]);
+
+  const { batchYear } = useParams(); // Accessing the batchNo from URL
+
+  useEffect(() => {
+    // Fetching PDFs based on batchNo
+    fetch(`http://localhost:5000/pdfs/${batchYear}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setClassPdfs(data); // Store the fetched PDFs in the state
+      })
+      .catch((error) => {
+        console.error("Error fetching PDFs:", error);
+      });
+  }, [batchYear]); // Re-fetch whenever batchNo changes
+
   return (
     <div className="mx-8">
-      <SectionTitle
-        heading={
-          "ICE 2231 (Data Structures and Algorithms): Section-A (Exam-2020)"
-        }
-      ></SectionTitle>
+      <SectionTitle heading={""}></SectionTitle>
 
       <div>
-        <div className="flex items-center my-4 justify-between border p-4 rounded-lg bg-gray-50 shadow-md max-w-4xl mx-auto">
-          {/* File Name */}
-          <span className="text-gray-800 text-sm font-medium">
-            1_Introduction-1
-          </span>
-
-          {/* Download Button */}
-          <button className="flex items-center space-x-2 bg-blue-100 text-blue-700 text-sm font-medium py-1 px-3 rounded-lg hover:bg-blue-200">
-            <FaDownload className="text-blue-500" />
-            <span>Download</span>
-          </button>
-        </div>
-        <div className="flex items-center my-4 justify-between border p-4 rounded-lg bg-gray-50 shadow-md max-w-4xl mx-auto">
-          {/* File Name */}
-          <span className="text-gray-800 text-sm font-medium">
-            1_Introduction-1
-          </span>
-
-          {/* Download Button */}
-          <button className="flex items-center space-x-2 bg-blue-100 text-blue-700 text-sm font-medium py-1 px-3 rounded-lg hover:bg-blue-200">
-            <FaDownload className="text-blue-500" />
-            <span>Download</span>
-          </button>
-        </div>
-        <div className="flex items-center my-4 justify-between border p-4 rounded-lg bg-gray-50 shadow-md max-w-4xl mx-auto">
-          {/* File Name */}
-          <span className="text-gray-800 text-sm font-medium">
-            1_Introduction-1
-          </span>
-
-          {/* Download Button */}
-          <button className="flex items-center space-x-2 bg-blue-100 text-blue-700 text-sm font-medium py-1 px-3 rounded-lg hover:bg-blue-200">
-            <FaDownload className="text-blue-500" />
-            <span>Download</span>
-          </button>
-        </div>
-        <div className="flex items-center my-4 justify-between border p-4 rounded-lg bg-gray-50 shadow-md max-w-4xl mx-auto">
-          {/* File Name */}
-          <span className="text-gray-800 text-sm font-medium">
-            1_Introduction-1
-          </span>
-
-          {/* Download Button */}
-          <button className="flex items-center space-x-2 bg-blue-100 text-blue-700 text-sm font-medium py-1 px-3 rounded-lg hover:bg-blue-200">
-            <FaDownload className="text-blue-500" />
-            <span>Download</span>
-          </button>
-        </div>
-      </div>
-
-      <div>
-        <SectionTitle
-          heading={
-            "ICE 4151 (Information System Analysis and Design) : Section-A"
-          }
-        ></SectionTitle>
-
-        <div>
-          {/* ****************************** */}
-          <div>
-            <div className="flex items-center my-4 justify-between border p-4 rounded-lg bg-gray-50 shadow-md max-w-4xl mx-auto">
-              {/* File Name */}
-              <span className="text-gray-800 text-sm font-medium">
-                1_Introduction-1
-              </span>
-
-              {/* Download Button */}
-              <button className="flex items-center space-x-2 bg-blue-100 text-blue-700 text-sm font-medium py-1 px-3 rounded-lg hover:bg-blue-200">
-                <FaDownload className="text-blue-500" />
-                <span>Download</span>
-              </button>
-            </div>
-            <div className="flex items-center my-4 justify-between border p-4 rounded-lg bg-gray-50 shadow-md max-w-4xl mx-auto">
-              {/* File Name */}
-              <span className="text-gray-800 text-sm font-medium">
-                1_Introduction-1
-              </span>
-
-              {/* Download Button */}
-              <button className="flex items-center space-x-2 bg-blue-100 text-blue-700 text-sm font-medium py-1 px-3 rounded-lg hover:bg-blue-200">
-                <FaDownload className="text-blue-500" />
-                <span>Download</span>
-              </button>
-            </div>
-            <div className="flex items-center my-4 justify-between border p-4 rounded-lg bg-gray-50 shadow-md max-w-4xl mx-auto">
-              {/* File Name */}
-              <span className="text-gray-800 text-sm font-medium">
-                1_Introduction-1
-              </span>
-
-              {/* Download Button */}
-              <button className="flex items-center space-x-2 bg-blue-100 text-blue-700 text-sm font-medium py-1 px-3 rounded-lg hover:bg-blue-200">
-                <FaDownload className="text-blue-500" />
-                <span>Download</span>
-              </button>
-            </div>
-            <div className="flex items-center my-4 justify-between border p-4 rounded-lg bg-gray-50 shadow-md max-w-4xl mx-auto">
-              {/* File Name */}
-              <span className="text-gray-800 text-sm font-medium">
-                1_Introduction-1
-              </span>
-
-              {/* Download Button */}
-              <button className="flex items-center space-x-2 bg-blue-100 text-blue-700 text-sm font-medium py-1 px-3 rounded-lg hover:bg-blue-200">
-                <FaDownload className="text-blue-500" />
-                <span>Download</span>
-              </button>
-            </div>
-          </div>
-        </div>
+        {classPdfs.map((classPdf) => (
+          <ClassPdf key={classPdf._id} classPdf={classPdf} />
+        ))}
       </div>
     </div>
   );
