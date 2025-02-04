@@ -1,26 +1,40 @@
 import { FaDownload } from "react-icons/fa";
+
 const ClassPdf = ({ classPdf }) => {
   return (
-    <div>
-      <div className="flex items-center my-4 justify-between border p-4 rounded-lg bg-gray-50 shadow-md max-w-4xl mx-auto">
-        {/* File Name */}
-        <span className="text-gray-800 text-sm font-medium">
-          {classPdf.courseName}
-        </span>
+    <div className="max-w-4xl mx-auto">
+      <div className="flex flex-wrap md:flex-nowrap items-center justify-between border p-5 rounded-lg bg-white shadow-md hover:shadow-lg transition">
+        {/* File Details - Left Side */}
+        <div className="flex flex-col md:flex-row md:items-center md:space-x-6 flex-1">
+          <span className="text-gray-900 text-lg font-semibold">
+            {classPdf?.courseName || "N/A"}
+          </span>
+          <span className="text-gray-700 text-lg font-medium">
+            {classPdf?.courseCode || "N/A"}
+          </span>
+          <span className="text-gray-700 text-lg font-medium">
+            {classPdf?.level}, {classPdf?.semester}
+          </span>
+        </div>
 
-        {/* Download Button */}
-        <button className="flex items-center space-x-2 bg-blue-100 text-blue-700 text-sm font-medium py-1 px-3 rounded-lg hover:bg-blue-200">
-          <FaDownload className="text-blue-500" />
-
-          <a
-            href={`http://localhost:5000/${classPdf.filePath}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 hover:underline"
-          >
-            <span>View PDF</span>
-          </a>
-        </button>
+        {/* Download Button / No File Message */}
+        <div>
+          {classPdf?.filePath ? (
+            <a
+              href={`http://localhost:5000/${classPdf.filePath}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition"
+            >
+              <FaDownload className="text-white" />
+              <span>View PDF</span>
+            </a>
+          ) : (
+            <span className="text-red-500 text-sm font-semibold">
+              PDF Not Available
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

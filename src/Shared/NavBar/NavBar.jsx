@@ -73,6 +73,19 @@ const NavBar = () => {
       </li>
       <li>
         <NavLink
+          to="/careLab"
+          className={({ isActive }) =>
+            `transition-colors duration-300 ${
+              isActive ? "text-yellow-500 font-bold" : "hover:text-yellow-500"
+            }`
+          }
+          aria-label="careLab"
+        >
+          CARE LAB
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
           to="/dashboard"
           className={({ isActive }) =>
             `transition-colors duration-300 ${
@@ -82,19 +95,6 @@ const NavBar = () => {
           aria-label="Dashboard"
         >
           DASH BOARD
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/pdf"
-          className={({ isActive }) =>
-            `transition-colors duration-300 ${
-              isActive ? "text-yellow-500 font-bold" : "hover:text-yellow-500"
-            }`
-          }
-          aria-label="Dashboard"
-        >
-          PDF
         </NavLink>
       </li>
     </>

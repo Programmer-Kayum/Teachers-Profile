@@ -1,23 +1,34 @@
-import { FaUpload } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import Items from "./Items";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
-const CourseIteam = ({ batch }) => {
+const CourseIteam = ({ batch, onDelete }) => {
   return (
     <div className="p-6 bg-gray-500 rounded-lg mt-4">
       <div className="bg-white p-4 rounded-lg text-center shadow-lg">
+        {/* Icons */}
+        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex space-x-2 text-lg">
+          {/* Edit Icon Link */}
+
+          <Link to={`/update/${batch._id}`}>
+            <FaEdit
+              className="cursor-pointer hover:text-blue-500"
+              title="Edit"
+            />
+          </Link>
+
+          {/* Delete Icon Link */}
+
+          <FaTrash
+            onClick={() => onDelete(batch._id)}
+            className="cursor-pointer hover:text-red-500"
+            title="Delete"
+          />
+        </div>
         {/* Row Layout */}
-        <div className="flex flex-wrap ml-20 gap-4 items-center">
-          {/* Loop through items array */}
-          {/* className="flex flex-col items-center justify-center p-2 bg-gray-50 border rounded-lg shadow-sm transition-all duration-300 hover:shadow-md" */}
-          {<Items batch={batch}></Items>}
-          {/* Upload Button */}
-          <div className="flex flex-col items-center justify-center p-2 bg-gray-50 border rounded-lg shadow-sm transition-all duration-300 hover:shadow-md">
-            <label className="flex items-center space-x-2 bg-blue-100 text-blue-700 text-sm font-medium py-1 px-4 rounded-lg hover:bg-blue-300 cursor-pointer transition-all duration-500">
-              <FaUpload className="text-blue-500" />
-              <span>Upload</span>
-              <input type="file" className="hidden" />
-            </label>
-          </div>
+        <div className="flex justify-center items-center">
+          {/* Items Component */}
+          {<Items batch={batch} />}
         </div>
       </div>
     </div>
@@ -25,3 +36,22 @@ const CourseIteam = ({ batch }) => {
 };
 
 export default CourseIteam;
+
+// {userRole === "admin" && (
+//   <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex space-x-2 text-lg">
+//     {/* Edit Icon Link */}
+//     <Link to={`/update/${batch._id}`}>
+//       <FaEdit
+//         className="cursor-pointer hover:text-blue-500"
+//         title="Edit"
+//       />
+//     </Link>
+
+//     {/* Delete Icon Link */}
+//     <FaTrash
+//       onClick={() => onDelete(batch._id)}
+//       className="cursor-pointer hover:text-red-500"
+//       title="Delete"
+//     />
+//   </div>
+// )}

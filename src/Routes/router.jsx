@@ -10,11 +10,17 @@ import Courses from "../components/StudentCorner/Courses/Courses";
 import AddPublication from "../components/Dashboard/AddPublication/AddPublication";
 import AddExamResult from "../components/Dashboard/AddExamResult/AddExamResult";
 import AddClassPdf from "../components/Dashboard/AddClassPdf/AddClassPdf";
+import AddBatchItem from "../components/Dashboard/AddBatchItem/AddBatchItem";
+import Update from "../components/StudentCorner/Update/Update";
+import CareLab from "../components/CareLab/CareLab";
+import AddResearcher from "../components/Dashboard/AddResearcher/AddResearcher";
+import ErrorPage from "../ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -55,6 +61,24 @@ export const router = createBrowserRouter([
       {
         path: "/uploadPdf",
         element: <AddClassPdf></AddClassPdf>,
+      },
+      {
+        path: "/addBatch",
+        element: <AddBatchItem></AddBatchItem>,
+      },
+      {
+        path: "/update/:id",
+        element: <Update></Update>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/batches/${params.id}`),
+      },
+      {
+        path: "/careLab",
+        element: <CareLab></CareLab>,
+      },
+      {
+        path: "/addResearcher",
+        element: <AddResearcher></AddResearcher>,
       },
     ],
   },

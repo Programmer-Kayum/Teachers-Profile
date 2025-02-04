@@ -8,41 +8,50 @@ import { useEffect, useState } from "react";
 const StudentCorner = () => {
   const [batches, setBatches] = useState([]);
   useEffect(() => {
-    fetch("batches.json")
+    fetch("http://localhost:5000/batches")
       .then((res) => res.json())
       .then((data) => {
-        setBatches(data);
+        // Sort the data based on batchYear in descending order
+        const sortedData = data.sort((a, b) => a.batchYear - b.batchYear);
+        setBatches(sortedData); // Set the sorted data
       });
   }, []);
 
-  const handleEdit = (id) => {
-    console.log("Edit clicked for batch ID:", id);
-  };
+  const handleDelete = (_id) => {
+    console.log("delete", _id);
 
-  const handleDelete = (id) => {
-    console.log("Delete clicked for batch ID:", id);
+    fetch(`http://localhost:5000/batches/${_id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+
+        if (data.deletedCount > 0) {
+          alert("Successfully deleted");
+          const remaining = batches.filter((user) => user._id !== _id);
+          setBatches(remaining);
+        }
+      });
   };
 
   return (
     <div>
       <img src={img} alt="Student Corner" />
-      <div className="mx-8">
+      <div className="mx-8 mb-20">
         <NoticeBoard />
         {/* <Courses></Courses> */}
 
         {/* Correctly map over the batches array */}
         <div>
-          <div className="my-4">
-            <SectionTitle
-              heading={"LECTURE MATERIALS AND MARKS"}
-            ></SectionTitle>
+          <div className="mt-4">
+            <SectionTitle heading={"LECTURE MATERIALS AND MARKS"} />
           </div>
 
           <div className="my-2">
             {batches.map((batch) => (
               <LectureMaterials
                 key={batch.id}
-                onEdit={handleEdit}
                 onDelete={handleDelete}
                 batch={batch}
               ></LectureMaterials>
