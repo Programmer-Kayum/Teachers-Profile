@@ -15,6 +15,9 @@ import Update from "../components/StudentCorner/Update/Update";
 import CareLab from "../components/CareLab/CareLab";
 import AddResearcher from "../components/Dashboard/AddResearcher/AddResearcher";
 import ErrorPage from "../ErrorPage/ErrorPage";
+import SignInPage from "../Security/SignIn/SignIn";
+import SignupPage from "../Security/SignUp/SignUp";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -36,7 +39,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/studentCorner",
-        element: <StudentCorner></StudentCorner>,
+        element: (
+          <PrivateRoute>
+            <StudentCorner></StudentCorner>{" "}
+          </PrivateRoute>
+        ),
       },
       {
         path: "/tools",
@@ -79,6 +86,14 @@ export const router = createBrowserRouter([
       {
         path: "/addResearcher",
         element: <AddResearcher></AddResearcher>,
+      },
+      {
+        path: "/signin",
+        element: <SignInPage></SignInPage>,
+      },
+      {
+        path: "/signup",
+        element: <SignupPage></SignupPage>,
       },
     ],
   },

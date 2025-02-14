@@ -1,11 +1,13 @@
+import img1 from "../../../assets/upload.png";
+
 const UploadedBanner = () => {
   return (
-    <div className="relative bg-gray-100 rounded-lg shadow-lg overflow-hidden">
+    <div className="relative bg-gray-100  shadow-lg rounded-lg overflow-hidden">
       {/* Banner Image */}
       <img
-        src="https://via.placeholder.com/1200x400" // Replace this with your image URL
+        src={img1} // Replace this with your image URL
         alt="Uploaded Section"
-        className="w-full h-64 object-cover"
+        className="w-full h-96 object-cover"
       />
       {/* Overlay Content */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900 opacity-70"></div>
@@ -14,9 +16,6 @@ const UploadedBanner = () => {
         <p className="text-sm md:text-lg mt-2">
           View and manage all your uploaded files and publications here.
         </p>
-        <button className="mt-4 bg-blue-500 hover:bg-blue-600 px-6 py-2 text-sm md:text-md font-bold rounded-md transition duration-300">
-          Explore Files
-        </button>
       </div>
     </div>
   );

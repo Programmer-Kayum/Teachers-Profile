@@ -1,7 +1,21 @@
 import { NavLink } from "react-router-dom";
 import sir from "../../assets/sir.jpg";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { useContext } from "react";
 
 const NavBar = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        alert("Successfully logged out");
+      })
+      .catch((error) => {
+        console.error("Logout Error:", error.message);
+      });
+  };
+
   const navOption = (
     <>
       <li>
@@ -9,7 +23,9 @@ const NavBar = () => {
           to="/"
           className={({ isActive }) =>
             `transition-colors duration-300 ${
-              isActive ? "text-yellow-500 font-bold" : "hover:text-yellow-500"
+              isActive
+                ? "text-yellow-500 font-semibold"
+                : "hover:text-yellow-500"
             }`
           }
           aria-label="Home"
@@ -23,7 +39,9 @@ const NavBar = () => {
           to="/resume"
           className={({ isActive }) =>
             `transition-colors duration-300 ${
-              isActive ? "text-yellow-500 font-bold" : "hover:text-yellow-500"
+              isActive
+                ? "text-yellow-500 font-semibold"
+                : "hover:text-yellow-500"
             }`
           }
           aria-label="RESUME"
@@ -37,10 +55,12 @@ const NavBar = () => {
           to="/publication"
           className={({ isActive }) =>
             `transition-colors duration-300 ${
-              isActive ? "text-yellow-500 font-bold" : "hover:text-yellow-500"
+              isActive
+                ? "text-yellow-500 font-semibold"
+                : "hover:text-yellow-500"
             }`
           }
-          aria-label=" PUBLICATIONS"
+          aria-label="PUBLICATIONS"
         >
           PUBLICATIONS
         </NavLink>
@@ -50,10 +70,12 @@ const NavBar = () => {
           to="/studentCorner"
           className={({ isActive }) =>
             `transition-colors duration-300 ${
-              isActive ? "text-yellow-500 font-bold" : "hover:text-yellow-500"
+              isActive
+                ? "text-yellow-500 font-semibold"
+                : "hover:text-yellow-500"
             }`
           }
-          aria-label=" STUDENT'S CORNER"
+          aria-label="STUDENT'S CORNER"
         >
           STUDENT'S CORNER
         </NavLink>
@@ -63,10 +85,12 @@ const NavBar = () => {
           to="/tools"
           className={({ isActive }) =>
             `transition-colors duration-300 ${
-              isActive ? "text-yellow-500 font-bold" : "hover:text-yellow-500"
+              isActive
+                ? "text-yellow-500 font-semibold"
+                : "hover:text-yellow-500"
             }`
           }
-          aria-label="   TOOLS & UTILITIES"
+          aria-label="TOOLS & UTILITIES"
         >
           TOOLS & UTILITIES
         </NavLink>
@@ -76,7 +100,9 @@ const NavBar = () => {
           to="/careLab"
           className={({ isActive }) =>
             `transition-colors duration-300 ${
-              isActive ? "text-yellow-500 font-bold" : "hover:text-yellow-500"
+              isActive
+                ? "text-yellow-500 font-semibold"
+                : "hover:text-yellow-500"
             }`
           }
           aria-label="careLab"
@@ -84,19 +110,60 @@ const NavBar = () => {
           CARE LAB
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          to="/dashboard"
-          className={({ isActive }) =>
-            `transition-colors duration-300 ${
-              isActive ? "text-yellow-500 font-bold" : "hover:text-yellow-500"
-            }`
-          }
-          aria-label="Dashboard"
-        >
-          DASH BOARD
-        </NavLink>
-      </li>
+
+      {/* Dashboard only for specific email */}
+      {user?.email === "kayum.ece.hstu@gmail.com" && (
+        <li>
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              `transition-colors duration-300 ${
+                isActive
+                  ? "text-yellow-500 font-semibold"
+                  : "hover:text-yellow-500"
+              }`
+            }
+            aria-label="Dashboard"
+          >
+            DASH BOARD
+          </NavLink>
+        </li>
+      )}
+
+      {/* Conditional Rendering for Auth */}
+      {user ? (
+        <li>
+          <button
+            onClick={handleLogout}
+            className="transition-colors duration-300 hover:text-yellow-500 relative"
+          >
+            LOG OUT
+            {user?.email && (
+              <span className="absolute -bottom-3 left-1/5 transform -translate-x-1/2 text-xs text-orange-500">
+                {user.email}
+              </span>
+            )}
+          </button>
+        </li>
+      ) : (
+        <>
+          <li>
+            <NavLink
+              to="/signin"
+              className={({ isActive }) =>
+                `transition-colors duration-300 ${
+                  isActive
+                    ? "text-yellow-500 font-bold"
+                    : "hover:text-yellow-500"
+                }`
+              }
+              aria-label="signin"
+            >
+              SIGN IN
+            </NavLink>
+          </li>
+        </>
+      )}
     </>
   );
 
@@ -137,14 +204,14 @@ const NavBar = () => {
                   <img className="w-32 h-32" src={sir} />
                 </div>
               </div>
-              <h1 className="ml-6 pt-4">
+              <h1 className="ml-6 pt-2">
                 Mahfujur <br />
                 <span className="ml-28 text-orange-600"> Rahman</span>
               </h1>
             </div>
             <ul className="lg:mt-8">
               {/* Navbar menu content here */}
-              <div className="space-y-4 mt-20 ml-12 my-4">{navOption}</div>
+              <div className="space-y-4 mt-10 ml-12 my-2">{navOption}</div>
             </ul>
           </div>
         </div>
