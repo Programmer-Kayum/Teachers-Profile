@@ -108,6 +108,29 @@ const Dashboard = () => {
             <div className="p-5 text-center">
               {/* Title */}
               <h2 className="text-2xl font-bold text-gray-700 mb-4">
+                Assignment
+              </h2>
+              {/* Description */}
+              <p className="text-gray-500 mb-6">Upload a Assignment.</p>
+              {/* Upload Button */}
+              <Link to="/assignment">
+                <div className="flex flex-col items-center justify-center p-2 bg-gray-50 border rounded-lg shadow-sm transition-all duration-300 hover:shadow-md">
+                  <label className="flex items-center space-x-2 bg-blue-100 text-blue-700 text-sm font-medium py-1 px-4 rounded-lg hover:bg-blue-300 cursor-pointer transition-all duration-500">
+                    <FaUpload className="text-blue-500" />
+                    <span>Upload</span>
+                  </label>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Add Student to CARE LAB Card */}
+        <div className="w-full h-64">
+          <div className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+            <div className="p-5 text-center">
+              {/* Title */}
+              <h2 className="text-2xl font-bold text-gray-700 mb-4">
                 CARE LAB
               </h2>
               {/* Description */}

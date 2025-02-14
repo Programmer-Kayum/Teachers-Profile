@@ -112,7 +112,8 @@ const NavBar = () => {
       </li>
 
       {/* Dashboard only for specific email */}
-      {user?.email === "kayum.ece.hstu@gmail.com" && (
+      {(user?.email === "kayum.ece.hstu@gmail.com" ||
+        user?.email === "mahfujurrahmanruice@gmail.com") && (
         <li>
           <NavLink
             to="/dashboard"
@@ -125,7 +126,7 @@ const NavBar = () => {
             }
             aria-label="Dashboard"
           >
-            DASH BOARD
+            DASHBOARD
           </NavLink>
         </li>
       )}

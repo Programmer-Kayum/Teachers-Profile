@@ -1,22 +1,51 @@
+import { useState } from "react";
+import axios from "axios";
+
 const AddExamResult = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const form = event.target;
+  const [formData, setFormData] = useState({
+    examName: "",
+    examCategory: "",
+    batch: "",
+    level: "",
+    semester: "",
+    pdf: null,
+  });
 
-    const examName = form.examName.value;
-    const examCategory = form.examCategory.value;
-    const batch = form.batch.value;
-    const level = form.level.value;
-    const semester = form.semester.value;
-    const pdf = form.pdf.files[0];
-
-    console.log({ examName, examCategory, batch, level, semester, pdf });
+  const handleChange = (e) => {
+    if (e.target.name === "pdf") {
+      setFormData({ ...formData, pdf: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    data.append("examName", formData.examName);
+    data.append("examCategory", formData.examCategory);
+    data.append("batch", formData.batch);
+    data.append("level", formData.level);
+    data.append("semester", formData.semester);
+    data.append("pdf", formData.pdf);
+
+    try {
+      const response = await axios.post("http://localhost:5000/results", data);
+      if (response.status === 200) {
+        alert("PDF uploaded successfully!");
+      } else {
+        alert("PDF upload failed. Please try again.");
+      }
+    } catch (error) {
+      alert("Error uploading PDF: " + error.message);
+    }
+  };
+
   return (
     <div className="mx-4">
-      {/* Section  */}
       <div>
-        <div className="flex  justify-center items-center py-8  bg-gray-100">
+        <div className="flex justify-center items-center py-8 bg-gray-100">
           <form
             onSubmit={handleSubmit}
             className="w-1/2 bg-white p-6 rounded-lg shadow-md"
@@ -36,9 +65,11 @@ const AddExamResult = () => {
               <select
                 id="examName"
                 name="examName"
+                value={formData.examName}
+                onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option disabled selected>
+                <option value="" disabled>
                   Select Exam Name
                 </option>
                 <option>Midterm</option>
@@ -59,9 +90,11 @@ const AddExamResult = () => {
               <select
                 id="examCategory"
                 name="examCategory"
+                value={formData.examCategory}
+                onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option disabled selected>
+                <option value="" disabled>
                   Select Category
                 </option>
                 <option>Theory</option>
@@ -81,9 +114,11 @@ const AddExamResult = () => {
               <select
                 id="batch"
                 name="batch"
+                value={formData.batch}
+                onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option disabled selected>
+                <option value="" disabled>
                   Select Batch
                 </option>
                 <option>2020</option>
@@ -108,9 +143,11 @@ const AddExamResult = () => {
               <select
                 id="level"
                 name="level"
+                value={formData.level}
+                onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option disabled selected>
+                <option value="" disabled>
                   Select Level
                 </option>
                 <option>Level 1</option>
@@ -131,9 +168,11 @@ const AddExamResult = () => {
               <select
                 id="semester"
                 name="semester"
+                value={formData.semester}
+                onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option disabled selected>
+                <option value="" disabled>
                   Select Semester
                 </option>
                 <option>Semester 1</option>
@@ -153,6 +192,7 @@ const AddExamResult = () => {
                 type="file"
                 id="pdf"
                 name="pdf"
+                onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 accept=".pdf"
               />

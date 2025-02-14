@@ -12,7 +12,8 @@ const CourseIteam = ({ batch, onDelete }) => {
     <div className="p-6 bg-gray-500 rounded-lg mt-4">
       <div className="bg-white p-4 rounded-lg text-center shadow-lg relative group">
         {/* Icons (Only visible for specific user) */}
-        {user?.email === "kayum.ece.hstu@gmail.com" && (
+        {(user?.email === "kayum.ece.hstu@gmail.com" ||
+          user?.email === "mahfujurrahmanruice@gmail.com") && (
           <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex space-x-2 text-lg">
             {/* Edit Icon */}
             <Link to={`/update/${batch._id}`}>

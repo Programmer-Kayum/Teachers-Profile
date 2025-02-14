@@ -18,6 +18,9 @@ import ErrorPage from "../ErrorPage/ErrorPage";
 import SignInPage from "../Security/SignIn/SignIn";
 import SignupPage from "../Security/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import Results from "../components/StudentCorner/Results/Results";
+import Assignment from "../components/StudentCorner/Assignment/Assignment";
+import AddAssignment from "../components/Dashboard/AddAssignment/AddAssignment";
 
 export const router = createBrowserRouter([
   {
@@ -39,11 +42,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/studentCorner",
-        element: (
-          <PrivateRoute>
-            <StudentCorner></StudentCorner>{" "}
-          </PrivateRoute>
-        ),
+        element: <StudentCorner></StudentCorner>,
       },
       {
         path: "/tools",
@@ -55,7 +54,31 @@ export const router = createBrowserRouter([
       },
       {
         path: "/pdfs/:batchYear", // Correct dynamic parameter syntax
-        element: <Courses />,
+        element: (
+          <PrivateRoute>
+            <Courses />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/result/:batchYear",
+        element: (
+          <PrivateRoute>
+            <Results></Results>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/assignment/:batchYear",
+        element: (
+          <PrivateRoute>
+            <Assignment></Assignment>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/assignment",
+        element: <AddAssignment></AddAssignment>,
       },
       {
         path: "/uploadPublication",
