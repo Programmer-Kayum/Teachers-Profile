@@ -80,7 +80,7 @@ const NavBar = () => {
           STUDENT'S CORNER
         </NavLink>
       </li>
-      <li>
+      {/* <li>
         <NavLink
           to="/tools"
           className={({ isActive }) =>
@@ -94,7 +94,7 @@ const NavBar = () => {
         >
           TOOLS & UTILITIES
         </NavLink>
-      </li>
+      </li> */}
       <li>
         <NavLink
           to="/careLab"
@@ -112,8 +112,7 @@ const NavBar = () => {
       </li>
 
       {/* Dashboard only for specific email */}
-      {(user?.email === "kayum.ece.hstu@gmail.com" ||
-        user?.email === "mahfujurrahmanruice@gmail.com") && (
+      {user?.email === "kayum.ece.hstu@gmail.com" && (
         <li>
           <NavLink
             to="/dashboard"
@@ -196,7 +195,7 @@ const NavBar = () => {
             </label>
           </div>
           <div className="mx-2 lg:hidden  px-2">
-            <h1>Mahfujur Rahman</h1>
+            <h1>John Smith</h1>
           </div>
           <div className="hidden h-full   lg:block">
             <div className="lg:mt-16 mx-4 font-bold text-4xl">
@@ -206,8 +205,8 @@ const NavBar = () => {
                 </div>
               </div>
               <h1 className="ml-6 pt-2">
-                Mahfujur <br />
-                <span className="ml-28 text-orange-600"> Rahman</span>
+                John <br />
+                <span className="ml-20 text-orange-600"> Smith</span>
               </h1>
             </div>
             <ul className="lg:mt-8">

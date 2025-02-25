@@ -1,74 +1,94 @@
-import { FaGoogle } from "react-icons/fa";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import signUp from "../../assets/login.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [isAuthorized, setIsAuthorized] = useState(false);
   const navigate = useNavigate();
-  const { createUser, SignByGoogle } = useContext(AuthContext);
+  const { createUser } = useContext(AuthContext);
+  const [students, setStudents] = useState([]);
 
-  const handleSignUp = (events) => {
-    events.preventDefault();
-    setError(""); // Clear previous errors
-    const form = events.target;
+  useEffect(() => {
+    fetch("https://mahfuj-sir.vercel.app/users")
+      .then((res) => res.json())
+      .then((data) => setStudents(data))
+      .catch((error) => console.error("Error fetching users:", error));
+  }, []);
+
+  const handleInputChange = (event) => {
+    const form = event.target.form;
+    const email = form.email.value;
+    const studentId = form.stu_id.value;
+
+    const authorized = students.some(
+      (student) => student.email === email && student.student_id === studentId
+    );
+    setIsAuthorized(authorized);
+  };
+
+  const handleSignUp = async (event) => {
+    event.preventDefault();
+    setError("");
+    const form = event.target;
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
     const password2 = form.confirmPassword.value;
+    const studentId = form.stu_id.value;
 
-    // Check if passwords match
     if (password !== password2) {
       setError("Passwords do not match.");
       return;
     }
 
-    // Check password length
     if (password.length < 6) {
       setError("Password must be at least 6 characters long.");
       return;
     }
 
-    createUser(email, password)
-      .then((result) => {
-        const user = result.user;
-        console.log(user);
-        alert("Successfully Signed Up");
-        setTimeout(() => {
-          navigate("/signIn"); // Redirect to sign-in page
-        }, 1000);
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        setError(errorMessage); // Show error message on UI
-        console.log(errorMessage);
+    if (!isAuthorized) {
+      alert("You are not assigned.");
+      return;
+    }
+
+    try {
+      // Sign up with Firebase
+      await createUser(email, password);
+
+      // Send data to your backend for saving
+      const response = await fetch("https://mahfuj-sir.vercel.app/new-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, studentId }),
       });
-  };
-  const handleGoogleSignIn = () => {
-    SignByGoogle()
-      .then((result) => {
-        console.log("Google Login Success:", result.user);
-        alert("Signed in with Google");
-        navigate(location?.state ? location.state : "/");
-      })
-      .catch((error) => {
-        console.error("Google Sign-In Error:", error.message);
-        setError(error.message);
-      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Signup failed");
+      }
+
+      alert("Successfully Signed Up");
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    } catch (error) {
+      setError(error.message);
+      console.log(error.message);
+    }
   };
 
   return (
     <div className="my-2 flex items-center justify-center bg-gray-50">
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-md p-8 flex flex-col md:flex-row items-center">
-        {/* Left Illustration Section */}
-        <div className=" md:flex w-1/2 justify-center">
+        <div className="md:flex w-1/2 justify-center">
           <img src={signUp} alt="Sign Up Illustration" className="lg:h-80" />
         </div>
 
-        {/* Right Form Section */}
         <div className="w-full md:w-2/5">
           <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
             Sign Up
@@ -84,8 +104,11 @@ const SignupPage = () => {
               <input
                 type="text"
                 id="name"
-                placeholder="Your name"
+                name="name"
+                required
+                placeholder="Type your name"
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                onChange={handleInputChange}
               />
             </div>
             <div>
@@ -98,8 +121,28 @@ const SignupPage = () => {
               <input
                 type="email"
                 id="email"
+                name="email"
+                required
                 placeholder="Your email"
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="stu_id"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Student ID
+              </label>
+              <input
+                type="text"
+                id="stu_id"
+                name="stu_id"
+                required
+                placeholder="Your student ID"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                onChange={handleInputChange}
               />
             </div>
             <div>
@@ -114,6 +157,7 @@ const SignupPage = () => {
                   type={showPassword ? "text" : "password"}
                   id="password1"
                   name="password"
+                  required
                   placeholder="Your password"
                   className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
                 />
@@ -137,6 +181,7 @@ const SignupPage = () => {
                 type={showPassword ? "text" : "password"}
                 id="password2"
                 name="confirmPassword"
+                required
                 placeholder="Confirm password"
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
               />
@@ -144,30 +189,21 @@ const SignupPage = () => {
             {error && <p className="text-red-500 text-sm">{error}</p>}
             <button
               type="submit"
-              className="w-full bg-orange-500 px-6 py-2 rounded-lg border border-gray-300 mt-4 transition duration-300 
-    hover:bg-gradient-to-r hover:from-red-500 hover:to-yellow-500 hover:text-white"
+              disabled={!isAuthorized}
+              className={`w-full px-6 py-2 rounded-lg border border-gray-300 mt-4 transition duration-300 ${
+                isAuthorized
+                  ? "bg-orange-500 hover:bg-gradient-to-r hover:from-red-500 hover:to-yellow-500 hover:text-white"
+                  : "bg-gray-300 cursor-not-allowed"
+              }`}
             >
               Sign Up
             </button>
           </form>
-          <div className="flex flex-col items-center mt-6">
-            <p className="text-gray-600">Or</p>
-            <p className="text-gray-600">Sign Up with</p>
-
-            <button
-              onClick={handleGoogleSignIn}
-              className="flex items-center shadow-lg gap-3 bg-white px-6 py-2 rounded-full border border-gray-300 mt-4 transition duration-300 
-    hover:bg-gradient-to-r hover:from-red-500 hover:to-yellow-500 hover:text-white"
-            >
-              <FaGoogle className="text-red-600 text-xl" />
-              <span className="font-medium">Continue with Google</span>
-            </button>
-          </div>
-
           <p className="mt-4 text-center text-sm text-gray-500">
             Already have an account?
-            <Link to="/signIn" href="#" className="text-red-500 font-semibold">
-              Login
+            <Link to="/signIn" className="text-red-500 font-semibold">
+              {" "}
+              Login{" "}
             </Link>
           </p>
         </div>

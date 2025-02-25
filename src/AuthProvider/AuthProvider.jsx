@@ -8,7 +8,6 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-
 import app from "../Firebase/firebase.init";
 
 export const AuthContext = createContext(null);

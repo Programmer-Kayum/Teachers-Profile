@@ -48,6 +48,7 @@ const SignInPage = () => {
 
   return (
     <div className="my-2 flex items-center justify-center bg-gray-50">
+      <div></div>
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-md p-8 flex flex-col md:flex-row items-center">
         {/* Left Illustration Section */}
         <div className="md:flex w-1/2 justify-center">

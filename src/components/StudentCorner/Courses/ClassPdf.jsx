@@ -1,38 +1,43 @@
 import { FaDownload } from "react-icons/fa";
 
 const ClassPdf = ({ classPdf }) => {
+  const { courseName, fileUrl } = classPdf;
+  console.log(classPdf);
+
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="flex flex-wrap md:flex-nowrap items-center justify-between border p-5 rounded-lg bg-white shadow-md hover:shadow-lg transition">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col sm:flex-row items-center justify-between border p-5 rounded-lg bg-white shadow-md hover:shadow-lg transition">
         {/* File Details - Left Side */}
-        <div className="flex flex-col md:flex-row md:items-center md:space-x-6 flex-1">
-          <span className="text-gray-900 text-lg font-semibold">
-            {classPdf?.courseName || "N/A"}
-          </span>
-          <span className="text-gray-700 text-lg font-medium">
-            {classPdf?.courseCode || "N/A"}
-          </span>
-          <span className="text-gray-700 text-lg font-medium">
-            {classPdf?.level}, {classPdf?.semester}
+        <div className="flex flex-1 flex-col sm:flex-row sm:items-center sm:justify-between w-full">
+          <span className="text-gray-900 text-lg font-semibold text-center sm:text-left">
+            {courseName || "N/A"}
           </span>
         </div>
 
         {/* Download Button / No File Message */}
-        <div>
-          {classPdf?.filePath ? (
+        <div className="mt-4 ">
+          {fileUrl ? (
             <a
-              href={`http://localhost:5000/${classPdf.filePath}`}
+              href={fileUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center space-x-2 bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition"
+              className="flex items-center justify-center sm:justify-end space-x-2 bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition"
             >
               <FaDownload className="text-white" />
               <span>View PDF</span>
             </a>
           ) : (
-            <span className="text-red-500 text-sm font-semibold">
-              PDF Not Available
-            </span>
+            <div className="flex flex-col sm:flex-row items-center sm:justify-end space-x-2">
+              <span className="text-red-500 text-sm font-semibold">
+                PDF Not Available
+              </span>
+              <button
+                onClick={() => alert("Try uploading again!")}
+                className="text-blue-600 text-sm font-medium hover:underline"
+              >
+                Try Again
+              </button>
+            </div>
           )}
         </div>
       </div>

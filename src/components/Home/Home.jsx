@@ -7,7 +7,7 @@ const Home = () => {
     <div>
       <div>
         <img
-          className=" lg:h-[400px] h-[200px] lg:mt-0 mt-16 w-full"
+          className=" lg:h-[500px] mt-16 lg:mt-0 h-[300px] w-full"
           src={img}
           alt=""
         />

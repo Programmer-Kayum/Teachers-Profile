@@ -7,7 +7,7 @@ const UploadedBanner = () => {
       <img
         src={img1} // Replace this with your image URL
         alt="Uploaded Section"
-        className="w-full h-96 object-cover"
+        className="w-full lg:h-96 lg:mt-0 mt-16 object-cover"
       />
       {/* Overlay Content */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900 opacity-70"></div>

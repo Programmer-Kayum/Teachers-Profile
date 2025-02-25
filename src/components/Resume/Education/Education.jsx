@@ -7,40 +7,36 @@ export default function Education() {
         <SectionTitle heading={"EDUCATION"}></SectionTitle>
       </div>
       <div className="p-6 bg-gray-50">
-        <ul className="space-y-4 list-decimal  space-y-4">
+        <ul className="space-y-4 list-decimal">
           <li>
-            <p className="font-bold text-lg">
-              M.Sc. Engg. in Information and Communication Engineering (ICE),
-              2020
+            <p className="lg:font-bold font-semibold text-lg">
+              M.Sc. Engg. in Electronics and Communication Engineering, 2022
             </p>
-            <p className="text-gray-700">
-              University of Rajshahi, Rajshahi-6205, Bangladesh
+            <p className="text-gray-700">XYZ University, City, Country</p>
+          </li>
+          <li>
+            <p className="lg:font-bold font-semibold text-lg">
+              B.Sc. Engg. in Electronics and Communication Engineering, 2020
             </p>
+            <p className="text-gray-700">XYZ University, City, Country</p>
           </li>
           <li>
             <p className="font-bold text-lg">
-              B.Sc. Engg. in Information and Communication Engineering (ICE),
-              2018
+              Higher Secondary Certificate (HSC), 2016
             </p>
-            <p className="text-gray-700">
-              University of Rajshahi, Rajshahi-6205, Bangladesh
-            </p>
+            <p className="text-gray-700">ABC College, City, Country</p>
           </li>
           <li>
             <p className="font-bold text-lg">
-              Higher Secondary School Certificate (HSC), 2013
+              Secondary School Certificate (SSC), 2014
             </p>
-            <p className="text-gray-700">
-              Dhaka Model College, Dhaka-1206, Bangladesh
-            </p>
+            <p className="text-gray-700">DEF High School, City, Country</p>
           </li>
           <li>
             <p className="font-bold text-lg">
-              Secondary School Certificate (SSC), 2011
+              Secondary School Certificatejhffhtjfgj (SSC), 2014
             </p>
-            <p className="text-gray-700">
-              Khalealampur D.S. Alim Madrasah, Chapainawabganj, Bangladesh
-            </p>
+            <p className="text-gray-700">DEF High School, City, Country</p>
           </li>
         </ul>
       </div>

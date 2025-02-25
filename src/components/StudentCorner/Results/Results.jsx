@@ -7,9 +7,9 @@ import ResultPdf from "./ResultPdf";
 const Results = () => {
   const [resultPdfs, setResultPdfs] = useState([]);
   const navigate = useNavigate();
-  const { batchYear } = useParams(); // Get batchYear from the URL
+  const { batchYear, courseCode } = useParams(); // Get batchYear from the URL
   useEffect(() => {
-    fetch(`http://localhost:5000/results/${batchYear}`)
+    fetch(`https://mahfuj-sir.vercel.app/results/${batchYear}/${courseCode}`)
       .then((res) => res.json())
       .then((data) => {
         setResultPdfs(data);
@@ -17,20 +17,20 @@ const Results = () => {
       .catch((error) => {
         console.error("Error fetching PDFs:", error);
       });
-  }, [batchYear]);
+  }, [batchYear, courseCode]);
   return (
-    <div className="mx-8">
+    <div className="mx-4 lg:mx-8">
       {/* Banner Image */}
       <figure className="w-full my-2 ">
         <img
           src={pdfImg} // Change this to your actual image path
           alt="Course Banner"
-          className="w-full h-96 object-cover rounded-lg shadow-md"
+          className="w-full lg:h-96 lg:mt-0 mt-20 object-cover rounded-lg shadow-md"
         />
       </figure>
 
       {/* Dynamic heading */}
-      <SectionTitle heading={`Batch: ${batchYear}`} />
+      <SectionTitle heading={`Batch: ${batchYear} - (${courseCode})`} />
 
       <div className=" p-6 my-4  bg-white shadow-lg rounded-lg">
         {/* Back Button */}

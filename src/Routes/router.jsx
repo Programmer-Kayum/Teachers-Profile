@@ -21,6 +21,8 @@ import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import Results from "../components/StudentCorner/Results/Results";
 import Assignment from "../components/StudentCorner/Assignment/Assignment";
 import AddAssignment from "../components/Dashboard/AddAssignment/AddAssignment";
+import Notice from "../components/StudentCorner/NoticeBoard/Notice";
+import AddUserForm from "../components/Dashboard/AddUsers/AddUsers";
 
 export const router = createBrowserRouter([
   {
@@ -53,7 +55,7 @@ export const router = createBrowserRouter([
         element: <Dashboard></Dashboard>,
       },
       {
-        path: "/pdfs/:batchYear", // Correct dynamic parameter syntax
+        path: "/pdfs/:batchYear/:courseCode", // Correct dynamic parameter syntax
         element: (
           <PrivateRoute>
             <Courses />
@@ -61,7 +63,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/result/:batchYear",
+        path: "/result/:batchYear/:courseCode",
         element: (
           <PrivateRoute>
             <Results></Results>
@@ -69,7 +71,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/assignment/:batchYear",
+        path: "/assignment/:batchYear/:courseCode",
         element: (
           <PrivateRoute>
             <Assignment></Assignment>
@@ -100,7 +102,7 @@ export const router = createBrowserRouter([
         path: "/update/:id",
         element: <Update></Update>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/batches/${params.id}`),
+          fetch(`https://mahfuj-sir.vercel.app/batches/${params.id}`),
       },
       {
         path: "/careLab",
@@ -117,6 +119,14 @@ export const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignupPage></SignupPage>,
+      },
+      {
+        path: "/notice",
+        element: <Notice></Notice>,
+      },
+      {
+        path: "/addusers",
+        element: <AddUserForm></AddUserForm>,
       },
     ],
   },

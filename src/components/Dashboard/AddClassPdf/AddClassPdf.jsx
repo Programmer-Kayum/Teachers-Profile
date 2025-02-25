@@ -1,18 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 export default function App() {
   const [formData, setFormData] = useState({
     name: "",
-    class: "",
-    year: "",
-    courseName: "",
     courseCode: "",
     batch: "",
-    level: "",
-    semester: "",
     pdf: null,
   });
+
+  const [uploadProgress, setUploadProgress] = useState(0); // Track upload progress
 
   const handleChange = (e) => {
     if (e.target.name === "pdf") {
@@ -26,51 +23,64 @@ export default function App() {
     e.preventDefault();
 
     const data = new FormData();
-    data.append("courseName", formData.courseName);
-    data.append("courseCode", formData.courseCode);
+    data.append("courseName", formData.name); // ✅ 'name' ঠিক করা হলো
+    data.append("courseCode", formData.courseCode); // ✅ 'courseCode' ঠিক করা হলো
     data.append("batch", formData.batch);
-    data.append("level", formData.level);
-    data.append("semester", formData.semester);
     data.append("pdf", formData.pdf);
 
     try {
-      const response = await axios.post("http://localhost:5000/upload", data);
+      const response = await axios.post(
+        "https://mahfuj-sir.vercel.app/upload",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          onUploadProgress: (progressEvent) => {
+            // Calculate the percentage of the upload
+            const percent = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            setUploadProgress(percent); // Update progress state
+          },
+        }
+      );
       if (response.status === 200) {
-        alert("PDF uploaded successfully!");
+        alert("✅ PDF uploaded successfully!");
       } else {
-        alert("PDF upload failed. Please try again.");
+        alert("❌ PDF upload failed. Please try again.");
       }
     } catch (error) {
-      alert("Error uploading PDF: " + error.message);
+      console.error("Upload Error:", error);
+      alert("❌ Error uploading PDF: " + error.message);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold mb-6">PDF Upload</h1>
-
+    <div className="min-h-screen lg:mt-0 mt-16 flex flex-col items-center bg-gray-100 p-6">
       {/* Upload Form */}
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md"
       >
-        <h2 className="text-2xl font-bold text-gray-700 mb-6 text-center">
+        <h2 className="text-3xl font-bold text-gray-700 mb-6 text-center">
           Upload Class PDF
         </h2>
 
-        {/* Course Name */}
+        {/* File Name */}
         <div className="mb-4">
           <label
-            htmlFor="courseName"
+            htmlFor="name"
             className="block text-gray-600 font-medium mb-2"
           >
-            Course Name
+            File Name
           </label>
           <input
             type="text"
-            id="courseName"
-            name="courseName"
-            placeholder="Enter course name"
+            id="name"
+            name="name"
+            placeholder="Enter file name"
+            value={formData.name}
             onChange={handleChange}
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
@@ -90,6 +100,7 @@ export default function App() {
             id="courseCode"
             name="courseCode"
             placeholder="Enter course code"
+            value={formData.courseCode}
             onChange={handleChange}
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
@@ -107,6 +118,7 @@ export default function App() {
           <select
             id="batch"
             name="batch"
+            value={formData.batch}
             onChange={handleChange}
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
@@ -119,54 +131,6 @@ export default function App() {
             <option>2022</option>
             <option>2023</option>
             <option>2024</option>
-          </select>
-        </div>
-
-        {/* Level */}
-        <div className="mb-4">
-          <label
-            htmlFor="level"
-            className="block text-gray-600 font-medium mb-2"
-          >
-            Level
-          </label>
-          <select
-            id="level"
-            name="level"
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          >
-            <option value="" disabled>
-              Select Level
-            </option>
-            <option>Level 1</option>
-            <option>Level 2</option>
-            <option>Level 3</option>
-            <option>Level 4</option>
-          </select>
-        </div>
-
-        {/* Semester */}
-        <div className="mb-4">
-          <label
-            htmlFor="semester"
-            className="block text-gray-600 font-medium mb-2"
-          >
-            Semester
-          </label>
-          <select
-            id="semester"
-            name="semester"
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          >
-            <option value="" disabled>
-              Select Semester
-            </option>
-            <option>Semester 1</option>
-            <option>Semester 2</option>
           </select>
         </div>
 
@@ -185,6 +149,21 @@ export default function App() {
             required
           />
         </div>
+
+        {/* Upload Progress */}
+        {uploadProgress > 0 && (
+          <div className="mb-4">
+            <div className="w-full bg-gray-200 rounded-full h-2.5">
+              <div
+                className="bg-blue-600 h-2.5 rounded-full"
+                style={{ width: `${uploadProgress}%` }}
+              ></div>
+            </div>
+            <div className="text-center text-sm text-gray-700 mt-2">
+              {uploadProgress}% Uploaded
+            </div>
+          </div>
+        )}
 
         {/* Submit Button */}
         <div className="text-center">

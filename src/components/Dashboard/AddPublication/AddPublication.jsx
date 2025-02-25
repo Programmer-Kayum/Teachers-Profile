@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import publication from "../../../assets/publication.png";
 
 const AddPublication = () => {
   const handlePublicationSubmit = (event) => {
@@ -15,7 +16,7 @@ const AddPublication = () => {
       link,
     };
 
-    fetch("http://localhost:5000/publication", {
+    fetch("https://mahfuj-sir.vercel.app/publication", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,30 +38,12 @@ const AddPublication = () => {
 
   return (
     <div>
-      <div className="relative bg-gray-100 mx-4 mb-4 rounded-lg shadow-lg overflow-hidden">
-        {/* Banner Image */}
-        <img
-          src="https://via.placeholder.com/1200x400" // Replace this with your image URL
-          alt="Uploaded Section"
-          className="w-full h-64 object-cover"
-        />
-        {/* Overlay Content */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900 opacity-70"></div>
-        <div className="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4">
-          <h2 className="text-2xl md:text-4xl font-bold">
-            Publication Uploaded Section
-          </h2>
-          <p className="text-sm md:text-lg mt-2">
-            Manage all your uploaded publications here.
-          </p>
-          <Link to={"/publication"}>
-            <button className="mt-4 bg-blue-500 hover:bg-blue-600 px-6 py-2 text-sm md:text-md font-bold rounded-md transition duration-300">
-              SEE ALL
-            </button>
-          </Link>
-        </div>
-      </div>
-      <div className="flex justify-center items-center lg:mb-10">
+      {/* Headline */}
+      <h2 className="text-center text-2xl font-bold text-gray-700 mt-8 mb-4">
+        Add a New Publication
+      </h2>
+
+      <div className="flex justify-center mt-8 items-center lg:mb-10">
         <form
           onSubmit={handlePublicationSubmit}
           className="p-6 bg-white border rounded-lg shadow-md w-full mx-5"
